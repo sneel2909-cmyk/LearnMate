@@ -1,0 +1,54 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user role, personal details, and learning profile.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["student", "parent", "educator"] },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "birthDate": { "type": "string", "format": "date" },
+        "grade": { "type": "string" },
+        "onboardingStep": { "type": "number" },
+        "isVerified": { "type": "boolean" },
+        "learningProfile": {
+          "type": "object",
+          "properties": {
+            "adhd": { "type": "number" },
+            "autism": { "type": "number" },
+            "dyslexia": { "type": "number" },
+            "summary": { "type": "string" }
+          }
+        },
+        "tokens": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email", "role"]
+    },
+    "AssessmentAnswer": {
+      "title": "Assessment Answer",
+      "description": "Specific answers given during the onboarding assessment.",
+      "type": "object",
+      "properties": {
+        "questionId": { "type": "string" },
+        "category": { "type": "string" },
+        "answer": { "type": "string" },
+        "isCorrect": { "type": "boolean" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Master user document."
+    },
+    "/users/{userId}/assessmentAnswers/{answerId}": {
+      "schema": "AssessmentAnswer",
+      "description": "Detailed answers for the assessment."
+    }
+  }
+}
